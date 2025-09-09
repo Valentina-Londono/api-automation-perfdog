@@ -10,8 +10,15 @@ import java.util.List;
 
 import static org.testng.Assert.*;
 
+/**
+ * Test class for GET /pet/findByStatus endpoint.
+ * It gets all the pets with a status 'available'.
+ */
 public class GetAvailablePetsTests extends TestRunner {
 
+    /**
+     * Test: get a list of pets with available status.
+     */
     @Test(testName = "Validate available pets list")
     public void validateAvailablePetsList() {
         Response response = RequestBuilder.getRequest(

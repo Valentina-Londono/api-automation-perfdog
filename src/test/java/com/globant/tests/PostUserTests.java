@@ -10,8 +10,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+/**
+ * Test class for POST /user endpoint.
+ * It checks user creation success.
+ */
 public class PostUserTests extends TestRunner {
 
+    /**
+     * Test: create a new user should return 200 and valid user info.
+     */
     @Test(testName = "Validate user creation")
     public void validateUserCreation() {
         CreateUserRequest createUserRequest = CreateUserRequest.builder()
@@ -31,3 +38,4 @@ public class PostUserTests extends TestRunner {
         assertTrue(createdUserId > 0, "The id of the user should be greater than 0.");
     }
 }
+

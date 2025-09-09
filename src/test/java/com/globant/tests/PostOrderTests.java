@@ -13,8 +13,16 @@ import java.time.ZonedDateTime;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+/**
+ * Test class for POST /store/order endpoint.
+ * It checks order creation for success and server error cases.
+ */
 public class PostOrderTests extends TestRunner {
 
+    /**
+     * Test: create an order successfully should return 200 and valid order data.
+     * Test: if server error happens, it should return 500 with error info.
+     */
     @Test(testName = "Validate order creation - success")
     public void validateOrderCreationSuccess() {
         CreateOrderRequest orderRequest = CreateOrderRequest.builder()
@@ -46,4 +54,5 @@ public class PostOrderTests extends TestRunner {
         }
     }
 }
+
 

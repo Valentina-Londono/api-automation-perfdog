@@ -9,16 +9,26 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
+/**
+ * Test class for user login.
+ * It checks login with correct and incorrect credentials.
+ */
 public class LoginUserTests extends TestRunner {
 
     private String username = "valtimore";
     private String password = "12345";
 
+    /**
+     * Create a test user before each login test.
+     */
     @BeforeMethod
     public void setupUser() {
         TestUtils.createTestUser(username, password, getBaseUrl(), getApiKey());
     }
 
+    /**
+     * Test: login should work with correct username and password.
+     */
     @Test(testName = "Validate successful login")
     public void validateSuccessfulLogin() {
         Response response = RequestBuilder.getRequest(
@@ -27,18 +37,24 @@ public class LoginUserTests extends TestRunner {
                 getApiKey()
         );
 
+        // Check status code
         assertEquals(response.getStatusCode(), 200, "The status code doesn't match");
 
+        // Check important headers
         String rateLimit = response.getHeader("X-Rate-Limit");
         String expiresAfter = response.getHeader("X-Expires-After");
 
         assertNotNull(rateLimit, "Rate limit header should not be null");
         assertNotNull(expiresAfter, "Expires-After header should not be null");
 
+        // Check message body
         String message = response.getBody().asString();
         assertTrue(message.contains("logged in user session"), "The login message doesn't match");
     }
 
+    /**
+     * Test: login should fail or show invalid message with wrong credentials.
+     */
     @Test(testName = "Validate login with invalid credentials")
     public void validateInvalidLogin() {
         String wrongUsername = "wrongUser";
@@ -50,8 +66,10 @@ public class LoginUserTests extends TestRunner {
                 getApiKey()
         );
 
+        // Check status code
         assertEquals(response.getStatusCode(), 200, "The status code doesn't match");
 
+        // Check message body for invalid login
         String message = response.getBody().asString();
         assertTrue(
                 message.contains("logged in user session") || message.contains("invalid"),
@@ -59,3 +77,4 @@ public class LoginUserTests extends TestRunner {
         );
     }
 }
+

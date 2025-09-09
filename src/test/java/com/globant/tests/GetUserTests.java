@@ -11,16 +11,26 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
+/**
+ * Test class for GET /user endpoint.
+ * It checks user found and user not found cases.
+ */
 public class GetUserTests extends TestRunner {
 
     private String username = "valtimore";
     private String password = "12345";
 
+    /**
+     * Create a test user before each test.
+     */
     @BeforeMethod
     public void setupUser() {
         TestUtils.createTestUser(username, password, getBaseUrl(), getApiKey());
     }
 
+    /**
+     * Test: get an existing user should return 200 and correct username.
+     */
     @Test(testName = "Validate found user - assertion 3")
     public void userFoundTestAssertion3() {
         Response response = RequestBuilder.getRequest(getBaseUrl(), "/user/" + username, getApiKey());
@@ -30,6 +40,9 @@ public class GetUserTests extends TestRunner {
         assertEquals(user.getUsername(), username, "The username doesn't match");
     }
 
+    /**
+     * Test: get an unknown user should return 404 and error code = 1.
+     */
     @Test(testName = "Validate not found user")
     public void userNotFoundTestAssertion() {
         Response response = RequestBuilder.getRequest(getBaseUrl(), "/user/unknownUser", getApiKey());
@@ -39,4 +52,5 @@ public class GetUserTests extends TestRunner {
         assertEquals(error.getCode(), 1, "Unexpected error code");
     }
 }
+
 
