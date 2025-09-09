@@ -24,7 +24,7 @@ public class GetPetTests extends TestRunner {
 
     @Test(testName = "Validate not found pet")
     public void validateNotFoundPet() {
-        Response response = RequestBuilder.getRequest(getBaseUrl(), "/pet/99999", getApiKey());
+        Response response = RequestBuilder.getRequest(getBaseUrl(), "/pet/9111119999", getApiKey());
         ErrorResponse error = response.as(ErrorResponse.class);
 
         assertEquals(response.getStatusCode(), 404, "The status code doesn't match");
